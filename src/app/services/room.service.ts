@@ -5,8 +5,8 @@ import { BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { RoomWithAnswer } from '../models/room-with-answer.model';
 import { RoomWithOffer } from '../models/room-with-offer.model';
+import { PEER } from '../modules/admin/create-room/create-room.component';
 import { MessageType } from '../types/message.type';
-import { PEER } from './../modules/create-room/create-room.component';
 
 export type PEER_TRC_CONNECTION = RTCPeerConnection & { dc?: RTCDataChannel };
 
@@ -54,7 +54,25 @@ export class RoomService {
     this._roomIdSelected.next(value);
   }
 
-  async createRoom(userId: string): Promise<{
+  createRoom(payload: CreateRoomPayload) {
+    return this._http.post(environment.serviceUrl + '/room/create-room', { 
+      payload
+    })
+  }
+
+  removeRoom(payload: RemoveRoomPayload) {
+    return this._http.post(environment.serviceUrl + '/room/remove-room', { 
+      payload
+    })
+  }
+
+  joinRoom(payload: JoinRoomPayload) {
+    return this._http.post(environment.serviceUrl + '/room/join-room', { 
+      payload
+    });
+  }
+
+  async createOffer(userId: string): Promise<{
     roomWithOffer: RoomWithOffer;
     roomId: string;
   }> {
@@ -92,7 +110,7 @@ export class RoomService {
     });
   }
 
-  async joinRoom(
+  async joinRoomX(
     roomId: string,
     userId: string,
     offer: RoomWithOffer
@@ -161,11 +179,33 @@ export class RoomService {
   }
 
   /* --------------------------------- Sockets -------------------------------- */
-  getRoom(ownerId: string) {
-    return this._socket.fromEvent(`room@${ownerId}`);
-  }
-
   getRoomContent(roomId: string) {
     return this._socket.fromEvent(`room@${roomId}`);
   }
+
+  getRoomViewerContent(roomId: string, viewerId: string) {
+    return this._socket.fromEvent(`room@${roomId}@${viewerId}`);
+  }
+}
+
+
+export interface CreateRoomPayload {
+  roomName: string;
+  price: number;
+  imageRoomUrl: string;
+  streamers: string[];
+}
+
+
+export interface RemoveRoomPayload {
+  roomId: string;
+}
+
+
+export interface JoinRoomPayload {
+  roomId: string,
+  userId?: string,
+  isStreamer: boolean,
+  // offer: RoomWithOffer | null;
+  // answer: RoomWithAnswer | null;
 }

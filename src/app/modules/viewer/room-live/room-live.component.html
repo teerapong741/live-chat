@@ -1,0 +1,42 @@
+<div
+  *ngIf="isCheckedOwnerPermission$ | async"
+  class="grid grid-cols-12 gap-5 h-full w-full justify-center items-center p-5"
+  style="height: 90vh"
+>
+  <div class="col-span-8 h-full w-full">
+    <video
+      *ngIf="localStream"
+      [srcObject]="localStream"
+      class="rounded-md bg-slate-700 w-full h-full"
+      autoplay
+    ></video>
+  </div>
+  <div class="col-span-4 h-full w-full">
+    <div class="rounded-md h-full bg-white shadow-md p-4 relative">
+      <p>Live Chat</p>
+      <div
+        class="mt-3 rounded-md h-[90%] bg-white shadow-inner p-4 overflow-auto border border-gray-300 flex flex-nowrap flex-col justify-end items-end gap-2"
+      >
+        <div
+          *ngFor="let message of messages"
+          class="flex w-full justify-start"
+        >
+        <div
+          class="px-5 py-2 rounded-xl shadow-md text-black font-mono bg-transparent border border-sky-700"
+        >
+          <p>{{ message.message }}</p>
+          <p class="text-[8px] text-gray-600">{{ message.sender_id }}: {{message.created_at | date}}</p>
+        </div>
+        </div>
+      </div>
+      <input
+        *ngIf="!isOwner"
+        type="text"
+        placeholder="Enter message"
+        class="w-full h-10 shadow-inner outline-none rounded-md border border-gray-300 mt-3 p-5"
+        [(ngModel)]="message"
+        (keyup.enter)="sendMessagesInRoom()"
+      />
+    </div>
+  </div>
+</div>

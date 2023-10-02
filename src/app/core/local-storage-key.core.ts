@@ -1,0 +1,4 @@
+export const LOCAL_STORAGE_KEY = {
+  AUTH: 'S(^$#GDFH*&@#JLDFG',
+  AUTH_ROOM: 'S(^$#GDFH*&@#JLDFGSLDFJSDFJH',
+};

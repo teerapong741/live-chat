@@ -3,6 +3,25 @@
 @tailwind components;
 @tailwind utilities;
 
-html , body {
-  @apply bg-neutral-900;
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap');
+
+html,
+body {
+  @apply bg-neutral-950;
+  font-family: 'EB Garamond', serif;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+.input-style { 
+  @apply w-full h-10 p-3 bg-transparent outline-none border-b border-yellow-400 font-thin;
+
+  &.dark {
+    @apply text-white;
+  }
 }

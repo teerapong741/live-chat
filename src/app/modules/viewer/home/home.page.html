@@ -1,0 +1,17 @@
+<div class="h-screen w-screen">
+  <div class="grid grid-cols-4 gap-4 w-full p-5">
+    <div *ngFor="let room of roomList" class="h-[648px] bg-slate-50 rounded-md shadow-md flex flex-col justify-around items-center relative">
+      <div class="absolute top-2 right-2 h-7 w-auto p-2 pl-3 bg-white rounded-md shadow-sm flex justify-center items-start">
+        <span class="font-mono font-bold text-xs">{{ room.status | uppercase }}</span>
+        <span class="animate-ping h-1 w-1 rounded-full opacity-75" [ngClass]="{ 'bg-green-500': room.status === 'LIVE', 'bg-red-500': room.status === 'OFFLINE' }"></span>
+      </div>
+      <div class="absolute top-9 right-0 h-7 w-auto p-2 pl-3 flex justify-end items-start">
+        <p class="text-white font-mono font-extrabold">{{room.roomName}}</p>
+      </div>
+      <div class="bg-gray-300 rounded-md rounded-b-none shadow-sm h-full w-full">
+        <img [src]="room.imageRoomUrl" class="bg-cover rounded-md rounded-b-none h-full w-full" [alt]="room.roomName">
+      </div>
+      <button class="bg-amber-400 hover:bg-amber-500 font-mono text-gray-600 hover:text-white rounded-md rounded-t-none shadow-md h-12 w-full active:translate-y-1 transition-all duration-300" [disabled]="room.status === 'OFFLINE'" (click)="onJoinRoom(room)">JOIN - {{room.price}} Coin</button>
+    </div>
+  </div>
+</div>

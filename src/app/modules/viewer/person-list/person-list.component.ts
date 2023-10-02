@@ -6,7 +6,7 @@ import {
   inject,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PEER } from 'src/app/modules/create-room/create-room.component';
+import { PEER } from 'src/app/modules/admin/create-room/create-room.component';
 import { RoomService } from 'src/app/services/room.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 

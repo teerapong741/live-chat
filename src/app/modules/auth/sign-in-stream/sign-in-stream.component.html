@@ -1,0 +1,19 @@
+<div class="h-screen w-screen flex flex-col justify-center items-center gap-5">
+  <div
+    class="flex flex-col justify-start items-start p-8 gap-5 rounded-lg shadow-sm bg-neutral-900 w-[550px]"
+  >
+    <p class="w-full text-center font-black text-4xl text-yellow-400">Login Stream</p>
+
+    <input
+      id="key"
+      type="text"
+      placeholder="KEY Stream"
+      [(ngModel)]="key"
+      class="w-full h-10 p-3 bg-transparent text-white outline-none border-b border-yellow-400 mt-10 font-thin"
+    />
+
+    <div class="w-full text-center">
+      <button type="submit" class="rounded-full px-12 py-4 bg-yellow-400 text-neutral-950 text-sm font-black mt-10" (click)="onLogin()">LOGIN</button>
+    </div>
+  </div>
+</div>

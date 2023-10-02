@@ -1,0 +1,57 @@
+<div class="py-4">
+  <div class="grid grid-cols-4 gap-4 w-full p-5">
+    <div *ngFor="let room of roomList" class="bg-slate-50 rounded-md shadow-md flex flex-col justify-around items-center relative">
+      <div class="absolute top-2 right-2 h-7 w-auto p-2 pl-3 bg-white rounded-md shadow-sm flex justify-center items-start">
+        <span class="font-mono font-bold text-xs">{{ room.status | uppercase }}</span>
+        <span class="animate-ping h-1 w-1 rounded-full opacity-75" [ngClass]="{ 'bg-green-500': room.status === 'LIVE', 'bg-red-500': room.status === 'OFFLINE' }"></span>
+      </div>
+      <div class="absolute top-9 right-0 h-7 w-auto p-2 pl-3 flex justify-end items-start">
+        <p class="text-white font-mono font-extrabold">{{room.roomName}}</p>
+        <p class="text-white font-mono text-lg font-extrabold">{{room.key}}</p>
+      </div>
+      <div class="bg-gray-300 rounded-md rounded-b-none shadow-sm h-[600px] w-full">
+        <img [src]="room.imageRoomUrl" class="bg-cover rounded-md rounded-b-none h-full w-full" [alt]="room.roomName">
+      </div>
+      <div class="w-full grid grid-cols-12">
+        <button class="bg-amber-400 hover:bg-amber-500 font-mono text-gray-600 hover:text-white rounded-none rounded-bl-md shadow-md h-12 col-span-6 active:translate-y-1 transition-all duration-300">{{room.price}} Coin</button>
+        <button class="bg-red-400 hover:bg-red-500 font-mono text-white hover:text-white rounded-none rounded-br-md shadow-md h-12 col-span-6 active:translate-y-1 transition-all duration-300" (click)="onRemoveRoom(room.id)"><i class="fa-solid fa-trash-can"></i></button>
+      </div>
+    </div>
+
+    <ng-container *ngIf="!isCreateRoom$$(); else createRoom">
+      <div class="h-[648px] bg-transparent rounded-md shadow-md flex justify-center items-center relative border border-dotted cursor-pointer" (click)="isCreateRoom$$.set(true)">
+        <span class="font-bold text-white">CREATE ROOM +</span>
+      </div>
+    </ng-container>
+    <ng-template #createRoom>
+      <div class="h-[648px] bg-slate-50 rounded-md shadow-md flex justify-center items-center relative border border-dotted cursor-pointer p-4">
+        <div class="m-0 grid grid-cols-12 gap-4">
+          <input id="roomName" [(ngModel)]="roomName" placeholder="Room Name" type="text" class="input-style col-span-6">
+          <div class="col-span-6 grid grid-cols-12 gap-4">
+            <input id="roomPrice" [(ngModel)]="price" placeholder="Price (Coin)" type="number" [min]="0" class="input-style col-span-8">
+            <label class="col-span-4 font-bold text-lg">Coin</label>
+          </div>
+      
+          <input id="ImageRoomUrl" [(ngModel)]="imageRoomUrl" placeholder="Image Room Url" type="text" class="input-style col-span-12">
+          
+          <p-multiSelect [(ngModel)]="streamersSelected" [style]="{ width: '100%' }" class="col-span-12 border-b border-yellow-400 rounded-md outline-none" appendTo="body" placeholder="Streamers" [options]="streamersOption" optionLabel="label" optionValue="value" display="chip"></p-multiSelect>
+          <div class="col-span-12 text-center">
+            <button type="button" class="rounded-md w-44 py-4 bg-red-400 text-neutral-950 text-sm font-black mt-10 mr-2" (click)="onCancelCreateRoom()">CANCEL</button>
+            <button type="submit" class="rounded-md w-44 py-4 bg-yellow-400 text-neutral-950 text-sm font-black mt-10" (click)="onCreateRoom()">CREATE ROOM</button>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+</div>
+
+<!-- <p-dialog
+  header="Create Room"
+  [visible]="isCreateRoom$$()"
+  (visibleChange)="isCreateRoom$$.set($event)"
+  [modal]="true"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
+>
+  
+</p-dialog> -->
